@@ -1,30 +1,22 @@
-// Sound file mappings
-const soundFiles = {
-    bird: 'sounds/bird.mp3',
-    meow: 'sounds/meow.mp3',
-    mouse: 'sounds/mouse.mp3',
-    purr: 'sounds/purr.mp3',
-    crinkle: 'sounds/crinkle.mp3',
-    toy: 'sounds/toy.mp3',
-    hiss: 'sounds/hiss.mp3',
-    treats: 'sounds/treats.mp3',
-    kitten: 'sounds/kitten.mp3',
-    whistle: 'sounds/whistle.mp3',
-    trill: 'sounds/trill.mp3',
-    'can-opener': 'sounds/can-opener.mp3'
-};
-
-// Audio instances cache
-const audioCache = {};
-
-// Volume control
+// Web Audio API context
+let audioContext;
 let currentVolume = 0.7;
+let isPlaying = false;
+
+// Initialize Audio Context on first user interaction
+function initAudioContext() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioContext.state === 'suspended') {
+        audioContext.resume();
+    }
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initializeVolumeControl();
     initializeSoundButtons();
-    preloadSounds();
 });
 
 function initializeVolumeControl() {
@@ -33,12 +25,7 @@ function initializeVolumeControl() {
 
     volumeSlider.addEventListener('input', (e) => {
         currentVolume = e.target.value / 100;
-        volumeDisplay.textContent = `${e.target.value}%`;
-
-        // Update volume for all cached audio
-        Object.values(audioCache).forEach(audio => {
-            audio.volume = currentVolume;
-        });
+        volumeDisplay.textContent = e.target.value;
     });
 }
 
@@ -47,70 +34,349 @@ function initializeSoundButtons() {
 
     buttons.forEach(button => {
         button.addEventListener('click', () => {
+            initAudioContext();
             const soundKey = button.dataset.sound;
             playSound(soundKey, button);
         });
     });
 }
 
-function preloadSounds() {
-    // Preload audio files for better performance
-    Object.entries(soundFiles).forEach(([key, file]) => {
-        const audio = new Audio(file);
-        audio.volume = currentVolume;
-        audio.preload = 'auto';
-
-        // Handle loading errors gracefully
-        audio.addEventListener('error', () => {
-            console.warn(`Could not load sound: ${file}`);
-        });
-
-        audioCache[key] = audio;
-    });
-}
-
+// Sound generation functions using Web Audio API
 function playSound(soundKey, button) {
-    const audio = audioCache[soundKey];
+    if (isPlaying) return;
 
-    if (!audio) {
-        showError(button, 'Sound not found');
-        return;
-    }
-
-    // Reset audio to beginning if already playing
-    audio.currentTime = 0;
-
-    // Set current volume
-    audio.volume = currentVolume;
-
-    // Add playing class for visual feedback
+    isPlaying = true;
     button.classList.add('playing');
 
-    // Play the sound
-    audio.play().catch(error => {
-        console.error('Error playing sound:', error);
-        showError(button, 'Could not play sound');
-        button.classList.remove('playing');
-    });
+    const soundGenerators = {
+        bird: generateBirdSound,
+        meow: generateMeowSound,
+        mouse: generateMouseSound,
+        purr: generatePurrSound,
+        crinkle: generateCrinkleSound,
+        toy: generateToySound,
+        hiss: generateHissSound,
+        treats: generateTreatsSound,
+        kitten: generateKittenSound,
+        whistle: generateWhistleSound,
+        trill: generateTrillSound,
+        can: generateCanSound
+    };
 
-    // Remove playing class when sound ends
-    audio.addEventListener('ended', () => {
-        button.classList.remove('playing');
-    }, { once: true });
-
-    // Also remove after a short time as backup
-    setTimeout(() => {
-        button.classList.remove('playing');
-    }, 500);
+    const generator = soundGenerators[soundKey];
+    if (generator) {
+        generator();
+        setTimeout(() => {
+            button.classList.remove('playing');
+            isPlaying = false;
+        }, 1000);
+    }
 }
 
-function showError(button, message) {
-    const originalHTML = button.innerHTML;
-    button.innerHTML = `<span style="color: white; font-size: 0.9rem;">⚠️ ${message}</span>`;
+// Bird chirping - rapid high frequency chirps
+function generateBirdSound() {
+    const duration = 0.8;
+    const chirps = 5;
 
-    setTimeout(() => {
-        button.innerHTML = originalHTML;
-    }, 2000);
+    for (let i = 0; i < chirps; i++) {
+        setTimeout(() => {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+
+            osc.frequency.setValueAtTime(2800, audioContext.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(3500, audioContext.currentTime + 0.08);
+
+            gain.gain.setValueAtTime(currentVolume * 0.3, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+
+            osc.start(audioContext.currentTime);
+            osc.stop(audioContext.currentTime + 0.15);
+        }, i * 150);
+    }
+}
+
+// Cat meow - varying pitch tone
+function generateMeowSound() {
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    osc.frequency.setValueAtTime(400, audioContext.currentTime);
+    osc.frequency.linearRampToValueAtTime(550, audioContext.currentTime + 0.2);
+    osc.frequency.linearRampToValueAtTime(450, audioContext.currentTime + 0.5);
+
+    gain.gain.setValueAtTime(currentVolume * 0.4, audioContext.currentTime);
+    gain.gain.linearRampToValueAtTime(currentVolume * 0.3, audioContext.currentTime + 0.3);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.7);
+
+    osc.type = 'sawtooth';
+    osc.start(audioContext.currentTime);
+    osc.stop(audioContext.currentTime + 0.7);
+}
+
+// Mouse squeak - very high pitched
+function generateMouseSound() {
+    const squeaks = 3;
+
+    for (let i = 0; i < squeaks; i++) {
+        setTimeout(() => {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+
+            osc.frequency.setValueAtTime(4000, audioContext.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(5000, audioContext.currentTime + 0.05);
+
+            gain.gain.setValueAtTime(currentVolume * 0.25, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+            osc.type = 'sine';
+            osc.start(audioContext.currentTime);
+            osc.stop(audioContext.currentTime + 0.1);
+        }, i * 200);
+    }
+}
+
+// Purr - low rumbling
+function generatePurrSound() {
+    const osc = audioContext.createOscillator();
+    const lfo = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    const lfoGain = audioContext.createGain();
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.frequency);
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    lfo.frequency.setValueAtTime(25, audioContext.currentTime);
+    lfoGain.gain.setValueAtTime(10, audioContext.currentTime);
+
+    osc.frequency.setValueAtTime(100, audioContext.currentTime);
+    osc.type = 'sawtooth';
+
+    gain.gain.setValueAtTime(currentVolume * 0.3, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.9);
+
+    lfo.start(audioContext.currentTime);
+    osc.start(audioContext.currentTime);
+    lfo.stop(audioContext.currentTime + 0.9);
+    osc.stop(audioContext.currentTime + 0.9);
+}
+
+// Crinkle - white noise bursts
+function generateCrinkleSound() {
+    const bufferSize = audioContext.sampleRate * 0.5;
+    const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+    const data = buffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = audioContext.createBufferSource();
+    const filter = audioContext.createBiquadFilter();
+    const gain = audioContext.createGain();
+
+    noise.buffer = buffer;
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioContext.destination);
+
+    filter.type = 'highpass';
+    filter.frequency.setValueAtTime(2000, audioContext.currentTime);
+
+    gain.gain.setValueAtTime(currentVolume * 0.4, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+    noise.start(audioContext.currentTime);
+    noise.stop(audioContext.currentTime + 0.5);
+}
+
+// Toy squeak - high pitch with vibrato
+function generateToySound() {
+    const osc = audioContext.createOscillator();
+    const lfo = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    const lfoGain = audioContext.createGain();
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.frequency);
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    lfo.frequency.setValueAtTime(5, audioContext.currentTime);
+    lfoGain.gain.setValueAtTime(50, audioContext.currentTime);
+
+    osc.frequency.setValueAtTime(1500, audioContext.currentTime);
+    osc.type = 'square';
+
+    gain.gain.setValueAtTime(currentVolume * 0.3, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+
+    lfo.start(audioContext.currentTime);
+    osc.start(audioContext.currentTime);
+    lfo.stop(audioContext.currentTime + 0.4);
+    osc.stop(audioContext.currentTime + 0.4);
+}
+
+// Hiss - filtered noise
+function generateHissSound() {
+    const bufferSize = audioContext.sampleRate * 0.6;
+    const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+    const data = buffer.getChannelData(0);
+
+    for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = audioContext.createBufferSource();
+    const filter = audioContext.createBiquadFilter();
+    const gain = audioContext.createGain();
+
+    noise.buffer = buffer;
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioContext.destination);
+
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(3000, audioContext.currentTime);
+    filter.Q.setValueAtTime(2, audioContext.currentTime);
+
+    gain.gain.setValueAtTime(currentVolume * 0.35, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
+
+    noise.start(audioContext.currentTime);
+    noise.stop(audioContext.currentTime + 0.6);
+}
+
+// Treats - rattling sound
+function generateTreatsSound() {
+    const rattles = 8;
+
+    for (let i = 0; i < rattles; i++) {
+        setTimeout(() => {
+            const bufferSize = audioContext.sampleRate * 0.05;
+            const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+            const data = buffer.getChannelData(0);
+
+            for (let j = 0; j < bufferSize; j++) {
+                data[j] = Math.random() * 2 - 1;
+            }
+
+            const noise = audioContext.createBufferSource();
+            const gain = audioContext.createGain();
+
+            noise.buffer = buffer;
+            noise.connect(gain);
+            gain.connect(audioContext.destination);
+
+            gain.gain.setValueAtTime(currentVolume * 0.4, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+
+            noise.start(audioContext.currentTime);
+        }, i * 80);
+    }
+}
+
+// Kitten mew - higher pitched meow
+function generateKittenSound() {
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    osc.frequency.setValueAtTime(600, audioContext.currentTime);
+    osc.frequency.linearRampToValueAtTime(800, audioContext.currentTime + 0.15);
+    osc.frequency.linearRampToValueAtTime(650, audioContext.currentTime + 0.4);
+
+    gain.gain.setValueAtTime(currentVolume * 0.35, audioContext.currentTime);
+    gain.gain.linearRampToValueAtTime(currentVolume * 0.25, audioContext.currentTime + 0.2);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+    osc.type = 'sawtooth';
+    osc.start(audioContext.currentTime);
+    osc.stop(audioContext.currentTime + 0.5);
+}
+
+// Whistle - pure high tone
+function generateWhistleSound() {
+    const osc = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    osc.frequency.setValueAtTime(3500, audioContext.currentTime);
+    osc.type = 'sine';
+
+    gain.gain.setValueAtTime(0.01, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(currentVolume * 0.3, audioContext.currentTime + 0.1);
+    gain.gain.setValueAtTime(currentVolume * 0.3, audioContext.currentTime + 0.5);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.7);
+
+    osc.start(audioContext.currentTime);
+    osc.stop(audioContext.currentTime + 0.7);
+}
+
+// Trill - rapid pitch changes
+function generateTrillSound() {
+    const osc = audioContext.createOscillator();
+    const lfo = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    const lfoGain = audioContext.createGain();
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(osc.frequency);
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
+
+    lfo.frequency.setValueAtTime(15, audioContext.currentTime);
+    lfoGain.gain.setValueAtTime(100, audioContext.currentTime);
+
+    osc.frequency.setValueAtTime(500, audioContext.currentTime);
+    osc.type = 'triangle';
+
+    gain.gain.setValueAtTime(currentVolume * 0.35, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.6);
+
+    lfo.start(audioContext.currentTime);
+    osc.start(audioContext.currentTime);
+    lfo.stop(audioContext.currentTime + 0.6);
+    osc.stop(audioContext.currentTime + 0.6);
+}
+
+// Can opener - metallic clicks
+function generateCanSound() {
+    const clicks = 6;
+
+    for (let i = 0; i < clicks; i++) {
+        setTimeout(() => {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+
+            osc.frequency.setValueAtTime(800, audioContext.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.05);
+            osc.type = 'square';
+
+            gain.gain.setValueAtTime(currentVolume * 0.4, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.08);
+
+            osc.start(audioContext.currentTime);
+            osc.stop(audioContext.currentTime + 0.08);
+        }, i * 120);
+    }
 }
 
 // Add keyboard support
@@ -129,8 +395,11 @@ document.addEventListener('keydown', (e) => {
     };
 
     const soundKey = keyMap[e.key];
-    if (soundKey && audioCache[soundKey]) {
+    if (soundKey) {
+        initAudioContext();
         const button = document.querySelector(`[data-sound="${soundKey}"]`);
-        playSound(soundKey, button);
+        if (button) {
+            playSound(soundKey, button);
+        }
     }
 });

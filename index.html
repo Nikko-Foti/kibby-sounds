@@ -2,87 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kibby Sounds - Cat Attention Getter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#DC0A2D">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>KIBBY-DEX</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🐱 Kibby Sounds 🐱</h1>
-            <p class="subtitle">Get your cat's attention with these sounds!</p>
-        </header>
+        <!-- Top red section with Pokédex lights -->
+        <div class="pokedex-top">
+            <div class="top-lights">
+                <div class="big-light"></div>
+                <div class="small-lights">
+                    <div class="small-light red"></div>
+                    <div class="small-light yellow"></div>
+                    <div class="small-light green"></div>
+                </div>
+            </div>
 
-        <div class="sound-grid">
-            <button class="sound-button" data-sound="bird">
-                <span class="icon">🐦</span>
-                <span class="label">Bird Chirping</span>
-            </button>
-
-            <button class="sound-button" data-sound="meow">
-                <span class="icon">😺</span>
-                <span class="label">Cat Meowing</span>
-            </button>
-
-            <button class="sound-button" data-sound="mouse">
-                <span class="icon">🐭</span>
-                <span class="label">Mouse Squeaking</span>
-            </button>
-
-            <button class="sound-button" data-sound="purr">
-                <span class="icon">😻</span>
-                <span class="label">Purring</span>
-            </button>
-
-            <button class="sound-button" data-sound="crinkle">
-                <span class="icon">📦</span>
-                <span class="label">Crinkle Sounds</span>
-            </button>
-
-            <button class="sound-button" data-sound="toy">
-                <span class="icon">🎾</span>
-                <span class="label">Toy Squeaking</span>
-            </button>
-
-            <button class="sound-button" data-sound="hiss">
-                <span class="icon">😾</span>
-                <span class="label">Cat Hissing</span>
-            </button>
-
-            <button class="sound-button" data-sound="treats">
-                <span class="icon">🍖</span>
-                <span class="label">Treat Bag</span>
-            </button>
-
-            <button class="sound-button" data-sound="kitten">
-                <span class="icon">🐈</span>
-                <span class="label">Kitten Mewing</span>
-            </button>
-
-            <button class="sound-button" data-sound="whistle">
-                <span class="icon">💨</span>
-                <span class="label">High Whistle</span>
-            </button>
-
-            <button class="sound-button" data-sound="trill">
-                <span class="icon">😸</span>
-                <span class="label">Cat Trill</span>
-            </button>
-
-            <button class="sound-button" data-sound="can-opener">
-                <span class="icon">🥫</span>
-                <span class="label">Can Opener</span>
-            </button>
+            <header>
+                <h1>KIBBY-DEX</h1>
+                <p class="subtitle">CAT SOUND SYSTEM v1.0</p>
+            </header>
         </div>
 
+        <!-- Screen section with buttons -->
+        <div class="screen-section">
+            <div class="screen">
+                <p class="screen-text">SELECT SOUND TO PLAY</p>
+                <p class="screen-text">TAP BUTTON BELOW</p>
+            </div>
+
+            <div class="sound-grid">
+                <button class="sound-button" data-sound="bird">
+                    <span class="icon">🐦</span>
+                    <span class="label">BIRD</span>
+                </button>
+
+                <button class="sound-button" data-sound="meow">
+                    <span class="icon">😺</span>
+                    <span class="label">MEOW</span>
+                </button>
+
+                <button class="sound-button" data-sound="mouse">
+                    <span class="icon">🐭</span>
+                    <span class="label">MOUSE</span>
+                </button>
+
+                <button class="sound-button" data-sound="purr">
+                    <span class="icon">😻</span>
+                    <span class="label">PURR</span>
+                </button>
+
+                <button class="sound-button" data-sound="crinkle">
+                    <span class="icon">📦</span>
+                    <span class="label">CRINKLE</span>
+                </button>
+
+                <button class="sound-button" data-sound="toy">
+                    <span class="icon">🎾</span>
+                    <span class="label">TOY</span>
+                </button>
+
+                <button class="sound-button" data-sound="hiss">
+                    <span class="icon">😾</span>
+                    <span class="label">HISS</span>
+                </button>
+
+                <button class="sound-button" data-sound="treats">
+                    <span class="icon">🍖</span>
+                    <span class="label">TREATS</span>
+                </button>
+
+                <button class="sound-button" data-sound="kitten">
+                    <span class="icon">🐈</span>
+                    <span class="label">KITTEN</span>
+                </button>
+
+                <button class="sound-button" data-sound="whistle">
+                    <span class="icon">💨</span>
+                    <span class="label">WHISTLE</span>
+                </button>
+
+                <button class="sound-button" data-sound="trill">
+                    <span class="icon">😸</span>
+                    <span class="label">TRILL</span>
+                </button>
+
+                <button class="sound-button" data-sound="can">
+                    <span class="icon">🥫</span>
+                    <span class="label">CAN</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Controls section -->
         <div class="controls">
-            <label for="volume">Volume:</label>
-            <input type="range" id="volume" min="0" max="100" value="70">
-            <span id="volume-display">70%</span>
+            <div class="volume-control">
+                <div class="volume-label">VOLUME CONTROL</div>
+                <div class="volume-slider-container">
+                    <input type="range" id="volume" min="0" max="100" value="70">
+                    <span id="volume-display">70</span>
+                </div>
+            </div>
         </div>
 
+        <!-- Footer -->
         <footer>
-            <p>💡 Tip: Turn up your device volume for best results!</p>
+            <p class="footer-text">TURN UP VOLUME FOR BEST RESULTS</p>
         </footer>
     </div>
 
