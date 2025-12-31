@@ -2,6 +2,23 @@
 let audioContext;
 let currentVolume = 0.7;
 let isPlaying = false;
+let audioCache = {};
+
+// Sound file paths - will try to load these first, fallback to synthesized
+const soundFiles = {
+    bird: 'sounds/bird.mp3',
+    meow: 'sounds/meow.mp3',
+    mouse: 'sounds/mouse.mp3',
+    purr: 'sounds/purr.mp3',
+    crinkle: 'sounds/crinkle.mp3',
+    toy: 'sounds/toy.mp3',
+    hiss: 'sounds/hiss.mp3',
+    treats: 'sounds/treats.mp3',
+    kitten: 'sounds/kitten.mp3',
+    whistle: 'sounds/whistle.mp3',
+    trill: 'sounds/trill.mp3',
+    can: 'sounds/can.mp3'
+};
 
 // Initialize Audio Context on first user interaction
 function initAudioContext() {
@@ -17,6 +34,7 @@ function initAudioContext() {
 document.addEventListener('DOMContentLoaded', () => {
     initializeVolumeControl();
     initializeSoundButtons();
+    preloadRealSounds();
 });
 
 function initializeVolumeControl() {
@@ -41,13 +59,63 @@ function initializeSoundButtons() {
     });
 }
 
-// Sound generation functions using Web Audio API
+// Preload real sound files (if they exist)
+function preloadRealSounds() {
+    Object.entries(soundFiles).forEach(([key, file]) => {
+        const audio = new Audio();
+        audio.preload = 'auto';
+
+        // Try to load the file
+        audio.addEventListener('canplaythrough', () => {
+            audioCache[key] = audio;
+            console.log(`✓ Loaded real sound: ${key}`);
+        }, { once: true });
+
+        audio.addEventListener('error', () => {
+            // File doesn't exist, will use synthesized sound
+            console.log(`✗ No file for ${key}, using synthesized sound`);
+        }, { once: true });
+
+        audio.src = file;
+        audio.volume = currentVolume;
+    });
+}
+
+// Play sound - tries real audio first, falls back to synthesized
 function playSound(soundKey, button) {
     if (isPlaying) return;
 
     isPlaying = true;
     button.classList.add('playing');
 
+    // Check if we have a real audio file loaded
+    if (audioCache[soundKey]) {
+        playRealSound(soundKey, button);
+    } else {
+        playSynthesizedSound(soundKey, button);
+    }
+}
+
+// Play real audio file
+function playRealSound(soundKey, button) {
+    const audio = audioCache[soundKey];
+    audio.currentTime = 0;
+    audio.volume = currentVolume;
+
+    audio.play().then(() => {
+        const duration = audio.duration * 1000 || 1000;
+        setTimeout(() => {
+            button.classList.remove('playing');
+            isPlaying = false;
+        }, Math.min(duration, 2000));
+    }).catch(() => {
+        // Fallback to synthesized if playback fails
+        playSynthesizedSound(soundKey, button);
+    });
+}
+
+// Play synthesized sound using Web Audio API
+function playSynthesizedSound(soundKey, button) {
     const soundGenerators = {
         bird: generateBirdSound,
         meow: generateMeowSound,

@@ -4,12 +4,15 @@ A fun, interactive website with buttons that play sounds to get your cat's atten
 
 ## Features
 
+- **Works immediately** - No setup required! Uses synthesized sounds by default
+- **Hybrid audio system** - Automatically uses real MP3s if added, otherwise uses Web Audio API
 - 12 different cat-attracting sounds
-- Beautiful, responsive design
+- Retro Pokédex/pixel art design
+- Mobile-first responsive layout
 - Volume control
 - Keyboard shortcuts (number keys 1-0)
 - Visual feedback when playing sounds
-- Mobile-friendly interface
+- Console logging shows which sounds are loaded
 
 ## Sound Categories
 
@@ -35,30 +38,26 @@ git clone https://github.com/Nikko-Foti/kibby-sounds.git
 cd kibby-sounds
 ```
 
-### 2. Add Sound Files
+### 2. Add Sound Files (Optional - Works Without Them!)
 
-The website needs audio files to work. You have several options:
+**The website works immediately using synthesized sounds!** However, you can add real recorded sounds for a more authentic experience.
 
-**Option A: Download Free Sounds**
+**How the hybrid system works:**
+- ✅ Real MP3 files in `sounds/` folder → Uses those
+- ❌ No files found → Automatically uses Web Audio API synthesized sounds
 
-Visit these websites for free, royalty-free cat and animal sounds:
-- [Freesound.org](https://freesound.org) (requires free account)
-- [Zapsplat](https://www.zapsplat.com)
-- [Mixkit](https://mixkit.co/free-sound-effects/)
-- [BBC Sound Effects](https://sound-effects.bbcrewind.co.uk)
+**To add real sounds:**
 
-**Option B: Record Your Own**
+Visit these websites for free, royalty-free sounds:
+- [Pixabay](https://pixabay.com/sound-effects/search/cat/) - No attribution required
+- [Mixkit](https://mixkit.co/free-sound-effects/cat/) - 13 free cat sounds
+- [Chosic](https://www.chosic.com/free-music/cat/) - Free for commercial use
+- [Quick Sounds](https://quicksounds.com/library/sounds/cat) - No login required
+- [ZapSplat](https://www.zapsplat.com/sound-effect-category/cats/) - High quality
 
-Use your phone to record:
-- Your cat's sounds (meows, purrs, trills)
-- Toy squeaks
-- Treat bag shakes
-- Can opener
-- Crinkle/rustling sounds
+Or record your own cat sounds with your phone!
 
-**Required Files:**
-
-Place these MP3 files in the `sounds/` directory:
+**Optional files to add to `sounds/` directory:**
 - `bird.mp3`
 - `meow.mp3`
 - `mouse.mp3`
