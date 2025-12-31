@@ -2,6 +2,24 @@
 let audioContext;
 let currentVolume = 0.7;
 let isPlaying = false;
+let audioCache = {};
+
+// Sound file paths - will try to load these first, fallback to synthesized
+// Using CDN URLs from SoundBible.com for available sounds
+const soundFiles = {
+    bird: 'sounds/bird.mp3', // fallback to synthesized
+    meow: 'http://soundbible.com/mp3/Cat_Meow_2-Cat_Stevens-2034822903.mp3',
+    mouse: 'sounds/mouse.mp3', // fallback to synthesized
+    purr: 'sounds/purr.mp3', // fallback to synthesized
+    crinkle: 'sounds/crinkle.mp3', // fallback to synthesized
+    toy: 'sounds/toy.mp3', // fallback to synthesized
+    hiss: 'http://soundbible.com/mp3/Angry_Cat-SoundBible.com-1050364296.mp3',
+    treats: 'sounds/treats.mp3', // fallback to synthesized
+    kitten: 'http://soundbible.com/mp3/Kitten_Meow-SoundBible.com-1295572573.mp3',
+    whistle: 'sounds/whistle.mp3', // fallback to synthesized
+    trill: 'http://soundbible.com/mp3/Cat_Meow-SoundBible.com-1453940411.mp3',
+    can: 'sounds/can.mp3' // fallback to synthesized
+};
 
 // Initialize Audio Context on first user interaction
 function initAudioContext() {
@@ -17,6 +35,7 @@ function initAudioContext() {
 document.addEventListener('DOMContentLoaded', () => {
     initializeVolumeControl();
     initializeSoundButtons();
+    preloadRealSounds();
 });
 
 function initializeVolumeControl() {
@@ -41,13 +60,63 @@ function initializeSoundButtons() {
     });
 }
 
-// Sound generation functions using Web Audio API
+// Preload real sound files (if they exist)
+function preloadRealSounds() {
+    Object.entries(soundFiles).forEach(([key, file]) => {
+        const audio = new Audio();
+        audio.preload = 'auto';
+
+        // Try to load the file
+        audio.addEventListener('canplaythrough', () => {
+            audioCache[key] = audio;
+            console.log(`✓ Loaded real sound: ${key}`);
+        }, { once: true });
+
+        audio.addEventListener('error', () => {
+            // File doesn't exist, will use synthesized sound
+            console.log(`✗ No file for ${key}, using synthesized sound`);
+        }, { once: true });
+
+        audio.src = file;
+        audio.volume = currentVolume;
+    });
+}
+
+// Play sound - tries real audio first, falls back to synthesized
 function playSound(soundKey, button) {
     if (isPlaying) return;
 
     isPlaying = true;
     button.classList.add('playing');
 
+    // Check if we have a real audio file loaded
+    if (audioCache[soundKey]) {
+        playRealSound(soundKey, button);
+    } else {
+        playSynthesizedSound(soundKey, button);
+    }
+}
+
+// Play real audio file
+function playRealSound(soundKey, button) {
+    const audio = audioCache[soundKey];
+    audio.currentTime = 0;
+    audio.volume = currentVolume;
+
+    audio.play().then(() => {
+        const duration = audio.duration * 1000 || 1000;
+        setTimeout(() => {
+            button.classList.remove('playing');
+            isPlaying = false;
+        }, Math.min(duration, 2000));
+    }).catch(() => {
+        // Fallback to synthesized if playback fails
+        playSynthesizedSound(soundKey, button);
+    });
+}
+
+// Play synthesized sound using Web Audio API
+function playSynthesizedSound(soundKey, button) {
     const soundGenerators = {
         bird: generateBirdSound,
         meow: generateMeowSound,
@@ -401,5 +470,24 @@ document.addEventListener('keydown', (e) => {
         if (button) {
             playSound(soundKey, button);
         }
+    }
+});
+
+// Cat reaction image display
+function showCatReaction() {
+    const overlay = document.getElementById('cat-reaction-overlay');
+    overlay.classList.add('show');
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+        overlay.classList.remove('show');
+    }, 3000);
+}
+
+// Initialize cat reaction button
+document.addEventListener('DOMContentLoaded', () => {
+    const reactionButton = document.getElementById('cat-reaction-btn');
+    if (reactionButton) {
+        reactionButton.addEventListener('click', showCatReaction);
     }
 });

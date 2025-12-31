@@ -201,6 +201,42 @@ h1 {
     gap: 10px;
 }
 
+/* Reaction button */
+.reaction-button {
+    background: #ffd700;
+    border: 3px solid #1a1a1a;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow:
+        inset -2px -2px 0px rgba(0, 0, 0, 0.3),
+        inset 2px 2px 0px rgba(255, 255, 255, 0.5);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.reaction-button:active {
+    box-shadow:
+        inset 2px 2px 0px rgba(0, 0, 0, 0.5),
+        inset -1px -1px 0px rgba(255, 255, 255, 0.2);
+    transform: translateY(2px);
+}
+
+.reaction-icon {
+    font-size: 24px;
+}
+
+.reaction-label {
+    font-size: 7px;
+    color: #1a1a1a;
+    text-align: center;
+    line-height: 1.5;
+}
+
 .volume-control {
     background: #1a1a1a;
     padding: 12px;
@@ -335,4 +371,39 @@ footer {
     .icon {
         font-size: 32px;
     }
+
+    .reaction-label {
+        font-size: 9px;
+    }
+}
+
+/* Cat Reaction Overlay */
+.cat-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.cat-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.cat-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border: 6px solid #ffd700;
+    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+    image-rendering: auto;
 }

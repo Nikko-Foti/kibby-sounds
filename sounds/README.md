@@ -1,10 +1,17 @@
 # Sound Files
 
-This directory should contain the audio files for the cat sounds website.
+**The website works without sound files!** It uses synthesized sounds by default.
 
-## Required Sound Files
+However, you can add **real recorded sounds** for a more authentic experience. The site will automatically use real sounds if you add them here, otherwise it falls back to synthesized sounds.
 
-The following MP3 files are needed (you can use any audio format supported by browsers: MP3, WAV, OGG):
+## How It Works
+
+1. **No files?** → Uses Web Audio API (synthesized beeps/tones)
+2. **Files added?** → Automatically uses real MP3 recordings
+
+## Sound Files to Add (Optional)
+
+Add these MP3 files to this directory for realistic sounds:
 
 - `bird.mp3` - Bird chirping sounds
 - `meow.mp3` - Cat meowing
@@ -17,36 +24,50 @@ The following MP3 files are needed (you can use any audio format supported by br
 - `kitten.mp3` - Kitten mewing/crying
 - `whistle.mp3` - High-pitched whistle
 - `trill.mp3` - Cat trill/chirrup sound
-- `can-opener.mp3` - Can opener sound
+- `can.mp3` - Can opener sound
 
-## Where to Find Free Cat Sounds
+## Where to Download Free Cat Sounds
 
-### Free Sound Libraries (Royalty-Free)
+### Top Recommended Sources
 
-1. **Freesound.org** - https://freesound.org
-   - Search for "cat meow", "bird chirp", etc.
-   - Requires free account
-   - Filter by Creative Commons licenses
+1. **Pixabay Sound Effects** - https://pixabay.com/sound-effects/search/cat/
+   - 100% royalty-free, no attribution required
+   - High-quality MP3 downloads
+   - Search for: cat, meow, purr, bird chirp, mouse squeak
 
-2. **Zapsplat** - https://www.zapsplat.com
-   - Free sound effects
-   - Search for animal sounds
-
-3. **Mixkit** - https://mixkit.co/free-sound-effects/
-   - Free sound effects
+2. **Mixkit** - https://mixkit.co/free-sound-effects/cat/
+   - 13 free cat sound effects
+   - Royalty-free, ready to use
    - No attribution required
 
-4. **BBC Sound Effects** - https://sound-effects.bbcrewind.co.uk
-   - Over 16,000 free sound effects
-   - For personal, educational, and research use
+3. **Chosic** - https://www.chosic.com/free-music/cat/
+   - Cat sound effects free download
+   - Free for commercial use
+   - MP3 format
 
-### YouTube to MP3 (Use Royalty-Free Videos Only)
+4. **Quick Sounds** - https://quicksounds.com/library/sounds/cat
+   - Free MP3 downloads
+   - No login required
+   - Easy direct downloads
 
-Search YouTube for "cat sounds no copyright" or "royalty free cat sounds" and use a YouTube to MP3 converter for videos explicitly marked as royalty-free.
+5. **Orange Free Sounds** - https://orangefreesounds.com/sound-effects/animal-sounds/cat-meow-sound/
+   - Free cat meow sounds
+   - MP3 downloads available
+   - Clear licensing
+
+6. **ZapSplat** - https://www.zapsplat.com/sound-effect-category/cats/
+   - Cats meowing, purring, hissing
+   - Free with account
+   - High quality recordings
+
+7. **BigSoundBank** - https://bigsoundbank.com/ (search for "cat")
+   - CC0 (Public Domain) sounds
+   - WAV and MP3 formats
+   - No attribution required
 
 ### Recording Your Own
 
-You can also record your own sounds:
+The most authentic option! Record your own cat sounds:
 - Your cat's meows, purrs, trills
 - Toy squeaks
 - Treat bag shakes
@@ -55,17 +76,56 @@ You can also record your own sounds:
 
 Use any audio recording app on your phone, then convert to MP3 if needed.
 
+## Quick Start Guide
+
+### Step 1: Download Sounds
+
+Visit any of the recommended sites above and search for:
+- "cat meow"
+- "cat purr"
+- "bird chirp"
+- "mouse squeak"
+- "cat hiss"
+- etc.
+
+### Step 2: Rename Files
+
+Rename your downloaded files to match these exact names:
+- `bird.mp3`
+- `meow.mp3`
+- `mouse.mp3`
+- `purr.mp3`
+- `crinkle.mp3`
+- `toy.mp3`
+- `hiss.mp3`
+- `treats.mp3`
+- `kitten.mp3`
+- `whistle.mp3`
+- `trill.mp3`
+- `can.mp3`
+
+### Step 3: Add to This Directory
+
+1. Place the renamed MP3 files in this `sounds/` folder
+2. Refresh the website
+3. Open browser console (F12) to see which sounds loaded
+4. Sounds will automatically play when you click the buttons!
+
 ## File Format Tips
 
-- **MP3** is most widely supported
+- **MP3** is most widely supported (also supports WAV, OGG)
 - Keep files small (under 1MB each) for faster loading
-- Typical settings: 128-192 kbps, 44.1 kHz sample rate
+- Recommended settings: 128-192 kbps, 44.1 kHz sample rate
 - Trim silence from beginning and end of clips
 - Normalize audio levels for consistency
 
-## Adding Your Sounds
+## Troubleshooting
 
-1. Download or record your sound files
-2. Rename them to match the required filenames above
-3. Place them in this `sounds/` directory
-4. The website will automatically load and play them!
+**Sound not playing?**
+- Check browser console (F12) for error messages
+- Make sure filename exactly matches (lowercase, .mp3 extension)
+- Try refreshing the page after adding files
+
+**Want to test without downloading?**
+- The site works perfectly without files using synthesized sounds!
+- Add real sounds later when you have time
