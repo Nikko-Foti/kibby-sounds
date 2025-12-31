@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#DC0A2D">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>KIBBY-DEX</title>
+    <title>KIBBY STIMMY</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -23,7 +23,7 @@
             </div>
 
             <header>
-                <h1>KIBBY-DEX</h1>
+                <h1>KIBBY STIMMY</h1>
                 <p class="subtitle">CAT SOUND SYSTEM v1.0</p>
             </header>
         </div>
@@ -100,6 +100,11 @@
 
         <!-- Controls section -->
         <div class="controls">
+            <button id="cat-reaction-btn" class="reaction-button">
+                <span class="reaction-icon">😸</span>
+                <span class="reaction-label">SEE HOW YOUR CAT WILL REACT</span>
+            </button>
+
             <div class="volume-control">
                 <div class="volume-label">VOLUME CONTROL</div>
                 <div class="volume-slider-container">
@@ -113,6 +118,11 @@
         <footer>
             <p class="footer-text">TURN UP VOLUME FOR BEST RESULTS</p>
         </footer>
+    </div>
+
+    <!-- Cat Reaction Overlay -->
+    <div id="cat-reaction-overlay" class="cat-overlay">
+        <img src="cat-reaction.jpg" alt="Cat Reaction" class="cat-image">
     </div>
 
     <script src="script.js"></script>

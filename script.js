@@ -5,19 +5,20 @@ let isPlaying = false;
 let audioCache = {};
 
 // Sound file paths - will try to load these first, fallback to synthesized
+// Using CDN URLs from SoundBible.com for available sounds
 const soundFiles = {
-    bird: 'sounds/bird.mp3',
-    meow: 'sounds/meow.mp3',
-    mouse: 'sounds/mouse.mp3',
-    purr: 'sounds/purr.mp3',
-    crinkle: 'sounds/crinkle.mp3',
-    toy: 'sounds/toy.mp3',
-    hiss: 'sounds/hiss.mp3',
-    treats: 'sounds/treats.mp3',
-    kitten: 'sounds/kitten.mp3',
-    whistle: 'sounds/whistle.mp3',
-    trill: 'sounds/trill.mp3',
-    can: 'sounds/can.mp3'
+    bird: 'sounds/bird.mp3', // fallback to synthesized
+    meow: 'http://soundbible.com/mp3/Cat_Meow_2-Cat_Stevens-2034822903.mp3',
+    mouse: 'sounds/mouse.mp3', // fallback to synthesized
+    purr: 'sounds/purr.mp3', // fallback to synthesized
+    crinkle: 'sounds/crinkle.mp3', // fallback to synthesized
+    toy: 'sounds/toy.mp3', // fallback to synthesized
+    hiss: 'http://soundbible.com/mp3/Angry_Cat-SoundBible.com-1050364296.mp3',
+    treats: 'sounds/treats.mp3', // fallback to synthesized
+    kitten: 'http://soundbible.com/mp3/Kitten_Meow-SoundBible.com-1295572573.mp3',
+    whistle: 'sounds/whistle.mp3', // fallback to synthesized
+    trill: 'http://soundbible.com/mp3/Cat_Meow-SoundBible.com-1453940411.mp3',
+    can: 'sounds/can.mp3' // fallback to synthesized
 };
 
 // Initialize Audio Context on first user interaction
@@ -469,5 +470,24 @@ document.addEventListener('keydown', (e) => {
         if (button) {
             playSound(soundKey, button);
         }
+    }
+});
+
+// Cat reaction image display
+function showCatReaction() {
+    const overlay = document.getElementById('cat-reaction-overlay');
+    overlay.classList.add('show');
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+        overlay.classList.remove('show');
+    }, 3000);
+}
+
+// Initialize cat reaction button
+document.addEventListener('DOMContentLoaded', () => {
+    const reactionButton = document.getElementById('cat-reaction-btn');
+    if (reactionButton) {
+        reactionButton.addEventListener('click', showCatReaction);
     }
 });
