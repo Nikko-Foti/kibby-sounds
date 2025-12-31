@@ -48,12 +48,13 @@ cd kibby-sounds
 
 **To add real sounds:**
 
-Visit these websites for free, royalty-free sounds:
-- [Pixabay](https://pixabay.com/sound-effects/search/cat/) - No attribution required
-- [Mixkit](https://mixkit.co/free-sound-effects/cat/) - 13 free cat sounds
-- [Chosic](https://www.chosic.com/free-music/cat/) - Free for commercial use
+Visit these websites for free, royalty-free sounds (all HTTPS, 2025):
+- [Pixabay](https://pixabay.com/sound-effects/search/cat/) ⭐ **BEST** - 775+ sounds, no attribution required
+- [Mixkit](https://mixkit.co/free-sound-effects/cat/) - 13 free cat sounds, direct downloads
 - [Quick Sounds](https://quicksounds.com/library/sounds/cat) - No login required
-- [ZapSplat](https://www.zapsplat.com/sound-effect-category/cats/) - High quality
+- [ZapSplat](https://www.zapsplat.com/sound-effect-category/cats/) - High quality (free account)
+- [Chosic](https://www.chosic.com/free-music/cat/) - Free for commercial use
+- [ElevenLabs](https://elevenlabs.io/sound-effects/cat-domestic) - AI-generated sounds
 
 Or record your own cat sounds with your phone!
 
