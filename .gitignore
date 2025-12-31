@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Optional: Uncomment if you don't want to commit sound files
+# sounds/*.mp3
+# sounds/*.wav
+# sounds/*.ogg
