@@ -84,9 +84,29 @@ function playSound(soundKey, button) {
     isPlaying = true;
     button.classList.add('playing');
 
-    // Check if we have a real audio file loaded
+    // Check if we have a real audio file loaded in cache
     if (audioCache[soundKey]) {
         playRealSound(soundKey, button);
+    } else if (soundFiles[soundKey]) {
+        // Try to load and play the real sound file on-demand
+        const audio = new Audio();
+        audio.src = soundFiles[soundKey];
+        audio.volume = currentVolume;
+
+        audio.play().then(() => {
+            // Successfully loaded and playing real sound
+            audioCache[soundKey] = audio;
+            console.log(`✓ Loaded and playing real sound: ${soundKey}`);
+            const duration = audio.duration * 1000 || 1000;
+            setTimeout(() => {
+                button.classList.remove('playing');
+                isPlaying = false;
+            }, Math.min(duration, 3000));
+        }).catch(() => {
+            // Failed to load, fallback to synthesized
+            console.log(`✗ Failed to load ${soundKey}, using synthesized sound`);
+            playSynthesizedSound(soundKey, button);
+        });
     } else {
         playSynthesizedSound(soundKey, button);
     }
