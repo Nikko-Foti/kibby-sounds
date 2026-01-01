@@ -28,42 +28,46 @@ Add these MP3 files to this directory for realistic sounds:
 
 ## Where to Download Free Cat Sounds
 
-### Top Recommended Sources
+### Top Recommended Sources (2025 - All HTTPS)
 
-1. **Pixabay Sound Effects** - https://pixabay.com/sound-effects/search/cat/
-   - 100% royalty-free, no attribution required
+1. **Pixabay Sound Effects** ⭐ BEST OPTION - https://pixabay.com/sound-effects/search/cat/
+   - 775+ royalty-free cat sound effects
+   - No attribution required, 100% free
    - High-quality MP3 downloads
-   - Search for: cat, meow, purr, bird chirp, mouse squeak
+   - Search for: cat, meow, purr, bird chirp, mouse squeak, hiss, kitten
 
 2. **Mixkit** - https://mixkit.co/free-sound-effects/cat/
    - 13 free cat sound effects
    - Royalty-free, ready to use
    - No attribution required
+   - Direct MP3 downloads
 
-3. **Chosic** - https://www.chosic.com/free-music/cat/
+3. **Quick Sounds** - https://quicksounds.com/library/sounds/cat
+   - Free MP3 downloads
+   - No login or account required
+   - Easy direct downloads
+   - Good variety of cat sounds
+
+4. **ZapSplat** - https://www.zapsplat.com/sound-effect-category/cats/
+   - High quality professional recordings
+   - Cats meowing, purring, hissing
+   - Free with account (no cost)
+   - Wide selection
+
+5. **Chosic** - https://www.chosic.com/free-music/cat/
    - Cat sound effects free download
    - Free for commercial use
    - MP3 format
+   - No attribution needed
 
-4. **Quick Sounds** - https://quicksounds.com/library/sounds/cat
-   - Free MP3 downloads
-   - No login required
-   - Easy direct downloads
+6. **ElevenLabs Sound Effects** - https://elevenlabs.io/sound-effects/cat-domestic
+   - AI-generated cat sounds
+   - Free plan available (requires attribution)
+   - High-quality domestic cat sounds
 
-5. **Orange Free Sounds** - https://orangefreesounds.com/sound-effects/animal-sounds/cat-meow-sound/
-   - Free cat meow sounds
-   - MP3 downloads available
-   - Clear licensing
-
-6. **ZapSplat** - https://www.zapsplat.com/sound-effect-category/cats/
-   - Cats meowing, purring, hissing
-   - Free with account
-   - High quality recordings
-
-7. **BigSoundBank** - https://bigsoundbank.com/ (search for "cat")
-   - CC0 (Public Domain) sounds
-   - WAV and MP3 formats
-   - No attribution required
+**Other sources:**
+- Orange Free Sounds - https://orangefreesounds.com/sound-effects/animal-sounds/cat-meow-sound/
+- BigSoundBank - https://bigsoundbank.com/ (search for "cat") - CC0 Public Domain
 
 ### Recording Your Own
 
