@@ -12,14 +12,8 @@ const soundFiles = {
     meow: 'sounds/meow.mp3',
     mouse: 'sounds/mouse.mp3',
     purr: 'sounds/purr.mp3',
-    crinkle: 'sounds/crinkle.mp3',
-    toy: 'sounds/toy.mp3',
     hiss: 'sounds/hiss.mp3',
-    treats: 'sounds/treats.mp3',
-    kitten: 'sounds/kitten.mp3',
-    whistle: 'sounds/whistle.mp3',
-    trill: 'sounds/trill.mp3',
-    can: 'sounds/can.mp3'
+    kitten: 'sounds/kitten.mp3'
 };
 
 // Initialize Audio Context on first user interaction
@@ -123,14 +117,8 @@ function playSynthesizedSound(soundKey, button) {
         meow: generateMeowSound,
         mouse: generateMouseSound,
         purr: generatePurrSound,
-        crinkle: generateCrinkleSound,
-        toy: generateToySound,
         hiss: generateHissSound,
-        treats: generateTreatsSound,
-        kitten: generateKittenSound,
-        whistle: generateWhistleSound,
-        trill: generateTrillSound,
-        can: generateCanSound
+        kitten: generateKittenSound
     };
 
     const generator = soundGenerators[soundKey];
